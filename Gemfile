@@ -28,6 +28,8 @@ else
   gem 'sprockets-rails'
 end
 
+gem 'foretell', path: '../foretell'
+
 # this will eventually be added to rails,
 # allows us to precompile all our templates in the unicorn master
 gem 'actionview_precompiler', require: false

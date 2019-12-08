@@ -59,6 +59,17 @@ Shoulda::Matchers.configure do |config|
   end
 end
 
+if ENV['CRYSTALBALL_MAP']
+  require 'foretell'
+
+  Crystalball::MapGenerator.start! do |config|
+    config.map_storage = Foretell::Crystalball::MapStorage::Neo4jStorage.new
+    config.register Foretell::Crystalball::MapGenerator::ConstantsDefinedStrategy.new(Rails.root, pattern: /app/)
+    config.register Crystalball::MapGenerator::CoverageStrategy.new
+  end
+end
+
+
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each { |f| require f }
@@ -198,7 +209,7 @@ RSpec.configure do |config|
 
     SiteSetting.provider = SiteSettings::LocalProcessProvider.new
 
-    WebMock.disable_net_connect!
+    WebMock.disable_net_connect!(allow_localhost: true)
   end
 
   class DiscourseMockRedis < MockRedis

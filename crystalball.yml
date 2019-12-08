@@ -1,0 +1,3 @@
+prediction_builder_class_name: 'Foretell::PredictionBuilder'
+requires:
+  - 'foretell'
